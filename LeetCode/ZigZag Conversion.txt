@@ -1,0 +1,21 @@
+public class Solution {
+    public String convert(String s, int numRows) {
+        String []r=new String[numRows];
+        Arrays.fill(r,"");
+        String ret="";
+        int i = 0,j;
+        while(i<s.length()){
+            for(j=0;i<s.length() && j<numRows;j++){
+                r[j]+=s.charAt(i);
+                i++;
+            }
+            for(j = numRows-2;i<s.length() && j>0;j--){
+                r[j] += s.charAt(i);
+                i++;
+            }
+        }
+        for(j=0;j<numRows;j++)
+            ret+=r[j];
+        return ret;  
+    }
+}
