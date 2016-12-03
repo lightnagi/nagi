@@ -1,0 +1,18 @@
+public class Solution {
+    public int removeElement(int[] nums, int val) {
+        int i = 0;
+        int pointer = nums.length - 1;
+        while(i <= pointer){
+            if(nums[i] == val){
+                nums[i] = nums[pointer];
+                pointer--;
+            } else {
+                i++;
+            }
+        }
+        return pointer + 1;
+    }
+}
+/* two pointers 可以是一快一慢 也可以是首尾两个
+   题目提示可以改变数组的顺序 即可以用首尾two pointers效率较高
+*/

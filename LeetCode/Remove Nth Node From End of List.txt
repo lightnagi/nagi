@@ -1,0 +1,26 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {  // ListNode里存放一个int型整数和一个next指向下一个Node
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {  // use two pointers
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if(n <= 0) return null;
+        ListNode dummy = new ListNode(0); //设置前置结点，方便操作
+        dummy.next = head;
+        ListNode preDelete = dummy;
+        for(int i = 0;i < n;i++){
+            if(head == null) return null; //防止n超过结点数
+            head = head.next;
+        }
+        while(head != null){ //一前一后，当head掉出List时，preDelete指向待删除结点的前一个结点
+            head = head.next;
+            preDelete = preDelete.next;
+        }
+        preDelete.next = preDelete.next.next; //删除结点
+        return dummy.next;
+    }
+}
