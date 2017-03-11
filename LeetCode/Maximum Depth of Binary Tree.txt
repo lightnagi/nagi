@@ -1,0 +1,41 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {			//树的深度，分治法
+    public int maxDepth(TreeNode root) {
+        if(root == null) return 0;
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+        return Math.max(left, right) + 1;
+    }
+}
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {		//树的深度，遍历
+    private int depth;
+    public int maxDepth(TreeNode root) {
+        depth = 0;
+        maxDepth(root, 1);
+        return depth;
+    }
+    private void maxDepth(TreeNode node, int curDepth){
+        if(node == null) return;
+        if(curDepth > depth) depth = curDepth;
+        maxDepth(node.left, curDepth + 1);
+        maxDepth(node.right, curDepth + 1);
+    }
+}

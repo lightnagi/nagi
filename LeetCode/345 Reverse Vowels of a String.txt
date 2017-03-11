@@ -1,0 +1,29 @@
+public class Solution {
+    public String reverseVowels(String s) {
+        if(s == null || s.length() == 0) return s;
+        int low = 0, high = s.length() - 1;
+        char[] str = s.toCharArray();
+        while(low < high){
+            while(low < high && !isVowels(str[low])){
+                low++;
+            }
+            while(low < high && !isVowels(str[high])){
+                high--;
+            }
+            if(low == high) break;
+            char c = str[low];
+            str[low] = str[high];
+            str[high] = c;
+            low++;
+            high--;
+        }
+        return new String(str);
+    }
+    private boolean isVowels(char c){
+        String s = "aeiouAEIOU";
+        if(s.contains(c + "")){
+            return true;
+        }
+        return false;
+    }
+}

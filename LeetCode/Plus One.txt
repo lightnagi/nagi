@@ -1,0 +1,17 @@
+public class Solution {
+    public int[] plusOne(int[] digits) {
+        int car = 1, sum;	//设置进位
+        for(int i = digits.length - 1; i >= 0 && car > 0; i--){
+            sum = digits[i] + car;
+            car = sum / 10;
+            digits[i] = sum % 10;
+        }
+        if(car == 0) return digits;
+        int[] ret = new int[digits.length + 1];
+        ret[0] = 1;
+        for(int i = 0; i < digits.length; i++){
+            ret[i+1] = digits[i];
+        }
+        return ret;
+    }
+}

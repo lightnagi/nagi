@@ -1,0 +1,14 @@
+public class Solution {  		//后一项等于前两项之和
+    public int climbStairs(int n) {
+        if(n == 1) return 1;
+        if(n == 2) return 2;
+        int first = 1, middle = 2;
+        int last = 0;
+        for(int i = 3; i <= n; i++){
+            last = first + middle;
+            first = middle;
+            middle = last;
+        }
+        return last;
+    }
+}

@@ -1,0 +1,26 @@
+public class Solution {
+    public String addBinary(String a, String b) {
+        int len1 = a.length(),len2 = b.length();
+        while((len1 - len2) > 0){   	//在较短的字符串前面补“0”，直到len1 == len2
+            b = "0" + b;
+            len2++;
+        }
+        while((len1 - len2) < 0){
+            a = "0" + a;
+            len1++;
+        }
+
+        int car = 0;				//进位标志位
+        String ret ="";				//返回字符串
+        while(len1 >= 1){
+            int sum = (int)(a.charAt(len1 - 1) -'0') + (int)(b.charAt(len1 - 1) - '0') + car;
+            car = sum / 2;
+            ret = String.valueOf(sum % 2) + ret;
+            len1--;
+        }
+        if(car == 1){
+            ret = "1" + ret;
+        }
+        return ret;
+    }
+}

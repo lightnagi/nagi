@@ -1,0 +1,40 @@
+//遍历第一遍，第一个元素为4，则将第4 % n个元素加上n，类推
+//		遍历第二遍，若元素值不超过n，输出。(14ms)
+public class Solution {
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        List<Integer> result = new ArrayList<>();
+        int n = nums.length;
+        for(int i = 0; i < n; i++){
+            nums[(nums[i] - 1) % n] += n;
+        }
+        for(int i = 0; i < n; i++){
+            if(nums[i] <= n) result.add(i + 1); 
+        }
+        return result;
+    }
+}
+
+/*		负数方式（24ms） 
+		遍历第一遍，第一个元素为4，则将第四个元素转为负数，类推，若为负数，则不变
+		遍历第二遍，看第几个元素大于0，输出
+		
+public class Solution {
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        List<Integer> result = new ArrayList<Integer>();
+        for( int i=0;i< nums.length; i++){
+            int index = nums[i];
+            if(nums[Math.abs(index)-1] > 0){
+                nums[Math.abs(index)-1]= -nums[Math.abs(index)-1];
+            }
+        }
+        
+        for(int j =1 ;j <= nums.length ; j++){
+            if(nums[j-1] > 0){
+                result.add(j);
+            }
+        }
+        return result;
+        
+    }
+}
+*/
