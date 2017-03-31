@@ -1,0 +1,37 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+/**
+ *Sort a linked list using insertion sort.
+ *链表的插入排序
+ *初步思路：从旧链表取出结点，从头遍历新链表，插入结点
+ */
+public class Solution {
+    public ListNode insertionSortList(ListNode head) {
+        if(head == null) return null;
+        
+        ListNode dummy = new ListNode(0);
+        ListNode pre = dummy;
+        ListNode cur = head;
+        
+        while(cur != null){
+            ListNode next = cur.next;
+			//改进思路：每插入一个结点之后，判断下一个结点与当前pre位置的值的关系，是否需要从头遍历
+            if(pre.next != null && pre.next.val > cur.val){
+				pre = dummy;
+            }
+            while(pre.next != null && pre.next.val <= cur.val){	//让cur位于pre和pre.next之间
+                pre = pre.next;
+            }
+            cur.next = pre.next;
+            pre.next = cur;
+            cur = next;
+        }
+        return dummy.next;
+    }
+}

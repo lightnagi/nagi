@@ -1,0 +1,54 @@
+/**
+ *Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
+ *给定一已排序链表，转换为平衡二叉查找树
+ */
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ //取链表的中间结点作为树的父节点，链表左边部分的中间结点作为左子结点，
+ //右边部分的中间结点作为右子结点，以此类推
+public class Solution {
+    private ListNode node;
+    public TreeNode sortedListToBST(ListNode head) {
+        if(head == null) return null;
+        ListNode temp = head;
+        node = head;
+        int size = 0;
+        while(temp != null) {	//求出链表长度
+            temp = temp.next;
+            size++;
+        }
+        return helper(0, size - 1);
+    }
+    private TreeNode helper(int start, int end){	//用中序遍历的方式
+        if(start > end){
+            return null;
+        }
+        int mid = start + (end - start) / 2;
+        //先生成左子树，然后父结点，再右子树
+        TreeNode left = helper(start, mid - 1);
+		
+        TreeNode treenode = new TreeNode(node.val);
+        treenode.left = left;
+        node = node.next;
+        
+        TreeNode right = helper(mid + 1, end);
+        treenode.right = right;
+        
+        return treenode;
+    }
+}
