@@ -6,10 +6,15 @@
  *     ListNode(int x) { val = x; }
  * }
  */
+/**
+ *判断链表是否为回文
+ *思路：把后半部分反转，再比较
+ */
 public class Solution {
     public boolean isPalindrome(ListNode head) {
         ListNode slow = head;
         ListNode fast = head;
+	//快慢指针，让慢指针指向后半部分的起始结点，然后反转，再比较
         while(fast != null && fast.next != null){
             fast = fast.next.next;
             slow = slow.next;
@@ -32,7 +37,7 @@ public class Solution {
         return true;
     }
     
-    public ListNode reverse(ListNode head){
+    public ListNode reverse(ListNode head){ //反转链表
         ListNode prev = null;
         while(head != null){
             ListNode temp = head.next;

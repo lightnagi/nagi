@@ -1,0 +1,41 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+/**
+ * Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
+ * 给定一个链表和一个值x,分区,使得所有小于x的结点都在前面，大于或等于x的结点都在后面（不改变同分区相对位置）。
+ * 思路：1.遍历，生成两条链表，第一条链表结点的值都小于x，然后第一条连接第二条（注意第二条最后结点应指向null）；
+ *       2.如下，一条链表，双指针，一个指针指向小于x的分区的最后一个结点，一个指向另一分区的最后一个结点，然后遍历所给链表，插入分区。
+ */
+public class Solution {
+    public ListNode partition(ListNode head, int x) {
+        if(head == null) return null;
+        ListNode dummy = new ListNode(0);
+        dummy.next = null;
+        ListNode pre = dummy;	//指向值小于x的结点分区的最后一个结点
+        ListNode tail = dummy;	//指向值大于或等于x的结点分区的最后一个结点
+        while(head != null){
+            ListNode temp = head.next;
+            if(head.val < x){	//遍历，值小于x，将结点插在pre后面
+                head.next = pre.next;
+                pre.next = head;
+                pre = pre.next;
+                head = temp;
+            } else {
+                while(tail.next != null){	//将tail指针移到生成链表的尾部
+                    tail = tail.next;
+                }
+                head.next = null;	//将结点插在tail后面
+                tail.next = head;
+                head = temp;
+                tail = tail.next;
+            }
+        }
+        return dummy.next;
+    }
+}
