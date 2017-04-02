@@ -9,6 +9,7 @@
  *     }
  * }
  */
+ //Approach #1
 public class Solution {		//在Linked List Cycle II的基础上，将一链表的尾部指向另一链表的首部
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         if(headA == null || headB == null) return null;
@@ -51,29 +52,28 @@ Approach #2 (Two Pointers)
  *     }
  * }
  */
- /*双指针从两个链表的首部同时前进，到达链表尾部则重定向至另一链表首部，
-   若相遇，则第一次相遇结点即为所求
+/* 双指针从两个链表的首部同时前进，到达链表尾部则重定向至另一链表首部，
+ * 设一条链表长度为 a+c ，另一条为 b+c ，则一个指针前进(a+c+b),另一个前进(b+c+a),相遇点即为所求，
+ * 若c为0，则相遇点为 null
 */
-public class Solution {    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         if(headA == null || headB == null) return null;
-        ListNode p = headA;
-        ListNode q = headB;
-        for(int i = 0; i < 2; i++){
-            while(p != null && q!= null){ 
-                p = p.next;
-                q = q.next;
+        
+        ListNode nodeA = headA;
+        ListNode nodeB = headB;
+        while(nodeA != nodeB){
+            if(nodeA == null){
+                nodeA = headB;
+            } else {
+                nodeA = nodeA.next;
             }
-            if(p == null){
-                p = headB;
-            }else{
-                q = headA;
+            if(nodeB == null){
+                nodeB = headA;
+            } else {
+                nodeB = nodeB.next;
             }
         }
-        while(p != null && q != null){
-            if(p == q) return p;
-            p = p.next;
-            q = q.next;
-        }
-        return null;
+        return nodeA;
     }
 }
