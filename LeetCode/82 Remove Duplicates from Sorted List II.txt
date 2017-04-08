@@ -1,0 +1,35 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+/**
+ * Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
+ */ 
+public class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null) return null;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        head = dummy;
+        int flag = 0; //标志位
+        while(head.next != null && head.next.next != null){
+            ListNode node = head.next;
+            while(node.next != null && node.val == node.next.val){
+                node.next = node.next.next;
+                flag = 1;
+            }
+            if(flag == 1){
+                head.next = node.next;
+            } else {
+                head = head.next;
+            }
+            flag = 0;
+            
+        }
+        return dummy.next;
+    }
+}
