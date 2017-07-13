@@ -1,0 +1,36 @@
+/**
+ * Given an array of scores that are non-negative integers.
+ * Player 1 picks one of the numbers from either end of the array followed by the player 2 
+ * and then player 1 and so on. Each time a player picks a number,
+ * that number will not be available for the next player.
+ * This continues until all the scores have been chosen. The player with the maximum score wins.
+ * Given an array of scores, predict whether player 1 is the winner.
+ * You can assume each player plays to maximize his score.
+ * 
+ * 动态规划
+ * 证：数组长度为偶数时，先选的人必获胜。数组长度为偶数，
+ *   可以假设所有奇数的和sum(odd) >= sum(even),先选的人只要重复选数组奇数位的元素，后选的人将不得不
+ *   选偶数位上的数，则先选的人必胜。
+ */
+
+
+
+public class Solution {
+    public boolean PredictTheWinner(int[] nums) {
+        int len = nums.length;
+        if((len & 1) == 0) return true; //数组长度为偶数时，先选的人必获胜。
+		
+        int[][] dp = new int[len][len]; //dp[i][j]是数组中从nums[i]到nums[j]，先选的人领先的数值。
+        for(int i = 0; i < len; i++){ 
+            dp[i][i] = nums[i];   //dp[i][i]表示数组中只有nums[i]，则先选的人领先nums[i].
+        }
+        
+        for(int n = 1; n < len; n++){
+            for(int i = 0; i < len-n; i++){
+                int j = i + n;
+                dp[i][j] = Math.max(nums[i]-dp[i+1][j], nums[j]-dp[i][j-1]);
+            }
+        }
+        return dp[0][len-1] >= 0;
+    }
+}

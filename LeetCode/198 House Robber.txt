@@ -1,3 +1,16 @@
+/**
+ * You are a professional robber planning to rob houses along a street.
+ * Each house has a certain amount of money stashed,
+ * the only constraint stopping you from robbing each of them is that 
+ * adjacent houses have security system connected 
+ * and it will automatically contact the police if two adjacent houses were broken into on the same night.
+ * 给定一个数组，选取互不相邻的元素，其和最大的子序列，输出该最大值。
+ *
+ * 思路：动态规划。
+ * dp[i] = Math.max(dp[i-1], dp[i-2] + nums[i-1]);
+ */
+
+Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight without alerting the police.
 public class Solution {
     public int rob(int[] nums) {
         if(nums == null || nums.length == 0) return 0;

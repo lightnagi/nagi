@@ -1,0 +1,20 @@
+/ **
+ * Given a non-empty integer array, find the minimum number of moves required to make all array elements equal, 
+ * where a move is incrementing a selected element by 1 or decrementing a selected element by 1.
+ * You may assume the array's length is at most 10,000.
+ * 给定一个非空的整数数组,
+ * 找到所需的最小数量的步骤，让所有数组元素相同,此步骤是所选元素加1或所选元素减1。
+ * 思路：找平均值
+ */
+public class Solution {
+    public int minMoves2(int[] nums) {
+        Arrays.sort(nums);
+        int i = 0, j = nums.length - 1, result = 0;
+        while(i < j){
+            result += nums[j] - nums[i];
+            i++;
+            j--;
+        }
+        return result;
+    }
+}

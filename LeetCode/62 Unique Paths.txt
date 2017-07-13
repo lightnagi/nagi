@@ -1,0 +1,22 @@
+/**
+ * A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+ * The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+ * How many possible unique paths are there?
+ * m*n的网格，从左上角走到右下角，只能往右或往下走，输出走法的数量。
+ * 
+ * 思路：动态规划。
+ * dp[m][n] = dp[m-1][n] + dp[m][n-1];
+ */
+
+public class Solution {
+    public int uniquePaths(int m, int n) {
+        int[] dp = new int[n+1];
+        dp[1] = 1;
+        for(int i = 1; i < m+1; i++){
+            for(int j = 2; j < n+1; j++){
+                dp[j] += dp[j-1]; //优化为一维数组
+            }
+        }
+        return dp[n];
+    }
+}

@@ -1,0 +1,37 @@
+/**
+ * Given a non-empty array containing only positive integers,
+ * find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal.
+ * 给定一个数组，判断能否分成元素和相等的两部分。
+ *
+ * 思路：每一部分的和大小为数组所有元素和的一半。（若所有元素的和为奇数，则直接可以输出false）
+ * 题目可以转化为：在数组中能否找到几个数，其和为某个定值。
+ * 动态规划。
+ */
+ 
+public class Solution {
+    public boolean canPartition(int[] nums) {
+        int sum = 0;
+        for(int i : nums){
+            sum += i;
+        }
+        if((sum & 1) == 1) return false;
+        sum /= 2;
+        
+        int n = nums.length;
+		//此处数组也可设为boolean型数组
+        int[] dp = new int[sum+1]; //动态规划空间优化，一维数组	
+        
+        for(int i = 0; i < sum+1; i++){
+            dp[i] = 0;
+        }
+        
+        for(int i = 1; i < n+1; i++){
+            for(int j = sum; j > 0; j--){
+                if(j - nums[i-1] >= 0) {
+                    dp[j] = Math.max(dp[j], dp[j-nums[i-1]]+nums[i-1]);
+                }
+            }
+        }
+        return dp[sum] == sum;
+    }
+}

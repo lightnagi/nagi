@@ -1,0 +1,34 @@
+/**
+ * Say you have an array for which the ith element is the price of a given stock on day i.
+ * 
+ * Design an algorithm to find the maximum profit. 
+ * You may complete as many transactions as you like 
+ * (ie, buy one and sell one share of the stock multiple times). 
+ * However, you may not engage in multiple transactions at the same time 
+ * ie, you must sell the stock before you buy again).
+ * 给定每天的股票价格，给出利益最大化的买卖方案。
+ *
+ * 思路：在价格较低点的时候买进，在较高点的时候卖出。
+ */
+
+public class Solution {
+    public int maxProfit(int[] prices) {
+        if(prices.length == 0) return 0;
+        int res = 0;
+        int i = 0;
+        int start = 0;
+        
+        while(i < prices.length-1){
+            start = i; //较低点
+            while(i < prices.length-1 && prices[i] <= prices[i+1]){
+                i++; //较高点
+            }
+            res += prices[i] - prices[start]; //差值
+            while(i < prices.length-1 && prices[i] > prices[i+1]){
+                i++;
+            }
+        }
+        
+        return res;
+    }
+}

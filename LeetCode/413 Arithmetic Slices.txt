@@ -1,0 +1,18 @@
+/**
+ * 给定一组数字，返回这串数字中能够构成等差数列的子串的数目。
+ * 例如：A = [1, 2, 3, 4] return: 3, for 3 arithmetic slices in A: [1, 2, 3], [2, 3, 4] and [1, 2, 3, 4] itself.
+ */
+public class Solution {
+    public int numberOfArithmeticSlices(int[] A) {
+        int sum = 0, count = 0;
+        for(int i = 2; i < A.length; i++){
+            if(A[i] - A[i-1] == A[i-1]-A[i-2]){
+                count++;
+                sum += count;
+            } else {
+                count = 0;
+            }
+        }
+        return sum;
+    }
+}

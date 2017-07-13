@@ -1,3 +1,8 @@
+/**
+ * Example:Given num = 38, the process is like: 3 + 8 = 11, 1 + 1 = 2. Since 2 has only one digit, return it.
+ * 
+ * ÕÒ¹æÂÉ
+ */
 public class Solution {
     public int addDigits(int num) {
         return (num - 1) % 9 + 1;
