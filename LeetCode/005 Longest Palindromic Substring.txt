@@ -1,0 +1,97 @@
+/**
+ * Given a string s, find the longest palindromic substring in s.
+ * You may assume that the maximum length of s is 1000.
+ * 求最长回文子串。
+ *
+ */
+
+// 字符串长度为奇数，以一个字符为中心，往两边进行回文判断；
+// 字符串长度为偶数，以两个字符为中心，往两边进行回文判断。（先判断这两个字符）
+// 15ms
+public class Solution {
+    private int max, start;
+    public String longestPalindrome(String s) {
+        int len = s.length();
+        
+        for(int i = 0; i < len; i++){
+            helper(s, i, i);
+            helper(s, i, i+1);    
+        }
+        return s.substring(start, start+max);
+    }
+    private void helper(String s, int i, int j){
+        while(i >= 0 && j < s.length() && s.charAt(i) == s.charAt(j)){
+            i--;
+            j++;
+        }
+        if(j - i - 1 > max){
+            start = i + 1;
+            max = j - i - 1;
+        }
+    }
+}
+
+// 动态规划
+// dp[i][j]表示从i到j的子串 是否为回文
+// 50ms
+public class Solution {
+    public String longestPalindrome(String s) {
+        int start = 0, end = 0, max = 1, len = s.length();
+        int[] dp = new int[len]; //优化为一维数组
+        
+        for(int i = len-2; i >= 0; i--){
+            for(int j = len-1; j > i; j--){
+                if(s.charAt(i) == s.charAt(j) && dp[j-1] == 0){
+                    dp[j] = 0;
+                    if(j - i >= max){
+                        max = j - i;
+                        start = i;
+                        end = j;
+                    }
+                } else {
+                    dp[j] = 1;
+                }
+            }
+        }
+        return s.substring(start, end+1);
+    }
+}
+
+// Manacher算法
+// 23ms
+public class Solution {
+    public String longestPalindrome(String s) {
+        if(s.length() == 1) return s;
+        StringBuilder str = new StringBuilder("$");
+        for(char c : s.toCharArray()){
+            str.append("#");
+            str.append(c);
+        }
+        str.append("#");
+        String s1 = str.toString();
+        int id = 0, mx = 0, start = 0, len = 0;
+        int[] p = new int[s1.length()];
+        for(int i = 1; i < s1.length(); i++){
+            if(i < mx){
+                p[i] = Math.min(p[2*id - i], mx - i);
+            } else {
+                p[i] = 1;
+            }
+            
+            while(i+p[i] < s1.length() && s1.charAt(i - p[i]) == s1.charAt(i + p[i])){
+                p[i]++;
+            }
+            
+            if(mx  < i + p[i]){
+                id = i;
+                mx = i + p[i];
+            }
+            
+            if(p[i] > len){
+                start = i;
+                len = p[i];
+            }
+        }
+        return s.substring(start/2 - len/2, start/2-len/2+len-1);
+    }
+}

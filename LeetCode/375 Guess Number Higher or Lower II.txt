@@ -1,0 +1,32 @@
+/**
+ * We are playing the Guess Game. The game is as follows:
+ * I pick a number from 1 to n. You have to guess which number I picked.
+ * Every time you guess wrong, I'll tell you whether the number I picked is higher or lower.
+ * However, when you guess a particular number x, and you guess wrong, you pay $x.
+ * You win the game when you guess the number I picked.
+ * Given a particular n ≥ 1, find out how much money you need to have to guarantee a win.
+ *
+ * 思路：
+ * 假定选择了一个错误的数x，（1<=x<=n && x!=y ）,那么接下来应该从[1,x-1 ] 或者[x+1,n]中进行查找。
+ * 假如已经解决了[1,x-1] 和 [x+1,n]计算问题，将其表示为solve(L,x-1) 和solve(x+1,n)，
+ * 那么应该选择max(solve(L,x-1),solve(x+1,n)), 这样就是求最坏情况下的损失。
+ * 总的损失就是 f(x) = x + max(solve(L,x-1),solve(x+1,n)),
+ * 将x从1~n进行遍历，使得 f(x) 达到最小，来确定最坏情况下最小的损失。
+ */
+ 
+public class Solution {
+    public int getMoneyAmount(int n) {
+        int[][] dp = new int[n+1][n+1];
+        for(int j = 2; j < n+1; j++){
+            for(int i = j-1; i > 0; i--){
+                int min = Integer.MAX_VALUE;
+                for(int k = i+1; k < j; k++){
+                    int max = k + Math.max(dp[i][k-1], dp[k+1][j]);
+                    min = Math.min(min, max);
+                }
+                dp[i][j] = i+1 == j ? i : min;
+            }
+        }
+        return dp[1][n];
+    }
+}
